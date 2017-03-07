@@ -5,15 +5,25 @@ package de.kumodo.rabbitsmart;
  */
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+    private ObjektMemoDataSource dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ObjektMemo testMemo = new ObjektMemo("Monitore", 5, 102);
+        Log.d(LOG_TAG, "Inhalt der Testmemo: " + testMemo.toString());
+
+        dataSource = new ObjektMemoDataSource(this);
     }
 
     @Override
