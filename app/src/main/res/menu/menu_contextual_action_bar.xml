@@ -6,4 +6,9 @@
         android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/cab_delete" />
 
+    <item
+        android:id="@+id/cab_change"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/cab_change" />
+
 </menu>

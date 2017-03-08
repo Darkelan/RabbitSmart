@@ -61,7 +61,7 @@ public class ObjektMemoDataSource {
         return ObjektMemo;
     }
 
-    public void deleteShoppingMemo(ObjektMemo shoppingMemo) {
+    public void deleteObjektMemo(ObjektMemo shoppingMemo) {
         long id = shoppingMemo.getId();
 
         database.delete(ObjektMemoDbHelper.TABLE_OBJEKT_LIST,
@@ -69,6 +69,27 @@ public class ObjektMemoDataSource {
                 null);
 
         Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id + " Inhalt: " + shoppingMemo.toString());
+    }
+
+    public ObjektMemo updateObjektMemo(long id, String newProduct, int newQuantity) {
+        ContentValues values = new ContentValues();
+        values.put(ObjektMemoDbHelper.COLUMN_PRODUCT, newProduct);
+        values.put(ObjektMemoDbHelper.COLUMN_QUANTITY, newQuantity);
+
+        database.update(ObjektMemoDbHelper.TABLE_OBJEKT_LIST,
+                values,
+                ObjektMemoDbHelper.COLUMN_ID + "=" + id,
+                null);
+
+        Cursor cursor = database.query(ObjektMemoDbHelper.TABLE_OBJEKT_LIST,
+                columns, ObjektMemoDbHelper.COLUMN_ID + "=" + id,
+                null, null, null, null);
+
+        cursor.moveToFirst();
+        ObjektMemo shoppingMemo = cursorToObjektMemo(cursor);
+        cursor.close();
+
+        return shoppingMemo;
     }
 
     private ObjektMemo cursorToObjektMemo(Cursor cursor) {
