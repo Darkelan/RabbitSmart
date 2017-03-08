@@ -61,6 +61,16 @@ public class ObjektMemoDataSource {
         return ObjektMemo;
     }
 
+    public void deleteShoppingMemo(ObjektMemo shoppingMemo) {
+        long id = shoppingMemo.getId();
+
+        database.delete(ObjektMemoDbHelper.TABLE_OBJEKT_LIST,
+                ObjektMemoDbHelper.COLUMN_ID + "=" + id,
+                null);
+
+        Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id + " Inhalt: " + shoppingMemo.toString());
+    }
+
     private ObjektMemo cursorToObjektMemo(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(ObjektMemoDbHelper.COLUMN_ID);
         int idProduct = cursor.getColumnIndex(ObjektMemoDbHelper.COLUMN_PRODUCT);
