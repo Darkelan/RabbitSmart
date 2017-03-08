@@ -23,9 +23,9 @@ public class ObjektMemoDataSource {
     private String[] columns = {
             ObjektMemoDbHelper.COLUMN_ID,
             ObjektMemoDbHelper.COLUMN_PRODUCT,
-            ObjektMemoDbHelper.COLUMN_QUANTITY
+            ObjektMemoDbHelper.COLUMN_QUANTITY,
+            ObjektMemoDbHelper.COLUMN_CHECKED
     };
-
 
     public ObjektMemoDataSource(Context context) {
         Log.d(LOG_TAG, "Unsere DataSource erzeugt jetzt den dbHelper.");
@@ -61,20 +61,23 @@ public class ObjektMemoDataSource {
         return ObjektMemo;
     }
 
-    public void deleteObjektMemo(ObjektMemo shoppingMemo) {
-        long id = shoppingMemo.getId();
+    public void deleteObjektMemo(ObjektMemo objektMemo) {
+        long id = objektMemo.getId();
 
         database.delete(ObjektMemoDbHelper.TABLE_OBJEKT_LIST,
                 ObjektMemoDbHelper.COLUMN_ID + "=" + id,
                 null);
 
-        Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id + " Inhalt: " + shoppingMemo.toString());
+        Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id + " Inhalt: " + objektMemo.toString());
     }
 
-    public ObjektMemo updateObjektMemo(long id, String newProduct, int newQuantity) {
+    public ObjektMemo updateObjektMemo(long id, String newProduct, int newQuantity, boolean newChecked) {
+        int intValueChecked = (newChecked)? 1 : 0;
+
         ContentValues values = new ContentValues();
         values.put(ObjektMemoDbHelper.COLUMN_PRODUCT, newProduct);
         values.put(ObjektMemoDbHelper.COLUMN_QUANTITY, newQuantity);
+        values.put(ObjektMemoDbHelper.COLUMN_CHECKED, intValueChecked);
 
         database.update(ObjektMemoDbHelper.TABLE_OBJEKT_LIST,
                 values,
@@ -86,24 +89,28 @@ public class ObjektMemoDataSource {
                 null, null, null, null);
 
         cursor.moveToFirst();
-        ObjektMemo shoppingMemo = cursorToObjektMemo(cursor);
+        ObjektMemo ObjektMemo = cursorToObjektMemo(cursor);
         cursor.close();
 
-        return shoppingMemo;
+        return ObjektMemo;
     }
 
     private ObjektMemo cursorToObjektMemo(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(ObjektMemoDbHelper.COLUMN_ID);
         int idProduct = cursor.getColumnIndex(ObjektMemoDbHelper.COLUMN_PRODUCT);
         int idQuantity = cursor.getColumnIndex(ObjektMemoDbHelper.COLUMN_QUANTITY);
+        int idChecked = cursor.getColumnIndex(ObjektMemoDbHelper.COLUMN_CHECKED);
 
         String product = cursor.getString(idProduct);
         int quantity = cursor.getInt(idQuantity);
         long id = cursor.getLong(idIndex);
+        int intValueChecked = cursor.getInt(idChecked);
 
-        ObjektMemo ObjektMemo = new ObjektMemo(product, quantity, id);
+        boolean isChecked = (intValueChecked != 0);
 
-        return ObjektMemo;
+        ObjektMemo objektMemo = new ObjektMemo(product, quantity, id, isChecked);
+
+        return objektMemo;
     }
 
     public List<ObjektMemo> getAllObjektMemos() {

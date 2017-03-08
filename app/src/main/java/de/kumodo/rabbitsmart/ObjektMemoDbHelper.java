@@ -15,19 +15,23 @@ public class ObjektMemoDbHelper extends SQLiteOpenHelper{
     private static final String LOG_TAG = ObjektMemoDbHelper.class.getSimpleName();
 
     public static final String DB_NAME = "objekt_list.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public static final String TABLE_OBJEKT_LIST = "objekt_list";
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_PRODUCT = "product";
     public static final String COLUMN_QUANTITY = "quantity";
+    public static final String COLUMN_CHECKED = "checked";
 
     public static final String SQL_CREATE =
             "CREATE TABLE " + TABLE_OBJEKT_LIST +
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_PRODUCT + " TEXT NOT NULL, " +
-                    COLUMN_QUANTITY + " INTEGER NOT NULL);";
+                    COLUMN_QUANTITY + " INTEGER NOT NULL, "+
+                    COLUMN_CHECKED + " BOOLEAN NOT NULL DEFAULT 0);";
+
+    public static final String SQL_DROP = "DROP TABLE IF EXISTS " + TABLE_OBJEKT_LIST;
 
     public ObjektMemoDbHelper(Context context) {
         //super(context, "PLATZHALTER_DATENBANKNAME", null, 1);
@@ -47,8 +51,12 @@ public class ObjektMemoDbHelper extends SQLiteOpenHelper{
         }
     }
 
+    // Die onUpgrade-Methode wird aufgerufen, sobald die neue Versionsnummer höher
+    // als die alte Versionsnummer ist und somit ein Upgrade notwendig wird
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.d(LOG_TAG, "Die Tabelle mit Versionsnummer " + oldVersion + " wird entfernt.");
+        db.execSQL(SQL_DROP);
+        onCreate(db);
     }
 }
