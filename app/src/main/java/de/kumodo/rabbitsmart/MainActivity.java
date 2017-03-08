@@ -9,6 +9,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -28,8 +32,27 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Die Datenquelle wird geöffnet.");
         dataSource.open();
 
+        ObjektMemo shoppingMemo = dataSource.createObjektMemo("Testprodukt", 2);
+        Log.d(LOG_TAG, "Es wurde der folgende Eintrag in die Datenbank geschrieben:");
+        Log.d(LOG_TAG, "ID: " + shoppingMemo.getId() + ", Inhalt: " + shoppingMemo.toString());
+
+        Log.d(LOG_TAG, "Folgende Einträge sind in der Datenbank vorhanden:");
+        showAllListEntries();
+
         Log.d(LOG_TAG, "Die Datenquelle wird geschlossen.");
         dataSource.close();
+    }
+
+    private void showAllListEntries () {
+        List<ObjektMemo> shoppingMemoList = dataSource.getAllObjektMemos();
+
+        ArrayAdapter<ObjektMemo> shoppingMemoArrayAdapter = new ArrayAdapter<> (
+                this,
+                android.R.layout.simple_list_item_multiple_choice,
+                shoppingMemoList);
+
+        ListView shoppingMemosListView = (ListView) findViewById(R.id.listview_shopping_memos);
+        shoppingMemosListView.setAdapter(shoppingMemoArrayAdapter);
     }
 
     @Override
