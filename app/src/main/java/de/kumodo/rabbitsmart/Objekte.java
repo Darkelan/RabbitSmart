@@ -4,36 +4,36 @@ package de.kumodo.rabbitsmart;
  * Created by l.schmidt on 07.03.2017.
  */
 
-public class ObjektMemo {
+public class Objekte {
 
-    private String product;
-    private int quantity;
+    private String name;
+    private int number;
     private long id;
     private boolean checked;
 
-    public ObjektMemo(String product, int quantity, long id, boolean checked) {
-        this.product = product;
-        this.quantity = quantity;
+    public Objekte(String name, int number, long id, boolean checked) {
+        this.name = name;
+        this.number = number;
         this.id = id;
         this.checked = checked;
     }
 
 
-    public String getProduct() {
-        return product;
+    public String getName() {
+        return name;
     }
 
-    public void setProduct(String product) {
-        this.product = product;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
-    public int getQuantity() {
-        return quantity;
+    public int getNumber() {
+        return number;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
 
@@ -55,7 +55,7 @@ public class ObjektMemo {
 
     @Override
     public String toString() {
-        String output = quantity + " x " + product;
+        String output = number + " -> " + name;
 
         return output;
     }

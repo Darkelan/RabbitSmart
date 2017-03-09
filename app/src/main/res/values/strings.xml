@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RabbitSmart</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_search">Suchen</string>
     <string name="editText_hint_number">Nummer</string>
     <string name="editText_hint_name">Beschreibung</string>
     <string name="button_add_product">+</string>

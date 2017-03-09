@@ -4,38 +4,39 @@ package de.kumodo.rabbitsmart;
  * Created by l.schmidt on 06.03.2017.
  */
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.List;
-import android.view.inputmethod.InputMethodManager;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
-import android.widget.AbsListView;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.widget.TextView;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private ObjektMemoDataSource dataSource;
-    private ListView mObjektMemosListView;
+    private ObjektInventurDataSource dataSource;
+    private ListView mObjektInventurListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,49 +44,49 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(LOG_TAG, "Das Datenquellen-Objekt wird angelegt.");
-        dataSource = new ObjektMemoDataSource(this);
+        dataSource = new ObjektInventurDataSource(this);
 
-        initializeObjektMemosListView();
+        initializeObjektInventurListView();
         activateAddButton();
         initializeContextualActionBar();
     }
 
     private void showAllListEntries() {
-        List<ObjektMemo> ObjektMemoList = dataSource.getAllObjektMemos();
+        List<Objekte> objekteList = dataSource.getAllObjektMemos();
 
-        ArrayAdapter<ObjektMemo> adapter = (ArrayAdapter<ObjektMemo>) mObjektMemosListView.getAdapter();
+        ArrayAdapter<Objekte> adapter = (ArrayAdapter<Objekte>) mObjektInventurListView.getAdapter();
 
         adapter.clear();
-        adapter.addAll(ObjektMemoList);
+        adapter.addAll(objekteList);
         adapter.notifyDataSetChanged();
     }
 
     private void activateAddButton() {
         Button buttonAddProduct = (Button) findViewById(R.id.button_add_objekt);
-        final EditText editTextQuantity = (EditText) findViewById(R.id.editText_number);
-        final EditText editTextProduct = (EditText) findViewById(R.id.editText_objekt);
+        final EditText editTextNumber = (EditText) findViewById(R.id.editText_number);
+        final EditText editTextObjekt = (EditText) findViewById(R.id.editText_objekt);
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String quantityString = editTextQuantity.getText().toString();
-                String product = editTextProduct.getText().toString();
+                String numberString = editTextNumber.getText().toString();
+                String objekt = editTextObjekt.getText().toString();
 
-                if (TextUtils.isEmpty(quantityString)) {
-                    editTextQuantity.setError(getString(R.string.editText_errorMessage));
+                if (TextUtils.isEmpty(numberString)) {
+                    editTextNumber.setError(getString(R.string.editText_errorMessage));
                     return;
                 }
-                if (TextUtils.isEmpty(product)) {
-                    editTextProduct.setError(getString(R.string.editText_errorMessage));
+                if (TextUtils.isEmpty(objekt)) {
+                    editTextObjekt.setError(getString(R.string.editText_errorMessage));
                     return;
                 }
 
-                int quantity = Integer.parseInt(quantityString);
-                editTextQuantity.setText("");
-                editTextProduct.setText("");
+                int quantity = Integer.parseInt(numberString);
+                editTextNumber.setText("");
+                editTextObjekt.setText("");
 
-                dataSource.createObjektMemo(product, quantity);
+                dataSource.createObjektMemo(objekt, quantity);
 
                 InputMethodManager inputMethodManager;
                 inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -100,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeContextualActionBar() {
 
-        final ListView ObjektMemosListView = (ListView) findViewById(R.id.listview_objekt_memos);
-        ObjektMemosListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        final ListView ObjektInventurListView = (ListView) findViewById(R.id.listview_objekt_inventur);
+        ObjektInventurListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
-        ObjektMemosListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+        ObjektInventurListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
             int selCount = 0;
 
@@ -147,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 boolean returnValue = true;
-                SparseBooleanArray touchedShoppingMemosPositions = ObjektMemosListView.getCheckedItemPositions();
+                SparseBooleanArray touchedShoppingMemosPositions = ObjektInventurListView.getCheckedItemPositions();
 
                 switch (item.getItemId()) {
                     case R.id.cab_delete:
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                             boolean isChecked = touchedShoppingMemosPositions.valueAt(i);
                             if (isChecked) {
                                 int postitionInListView = touchedShoppingMemosPositions.keyAt(i);
-                                ObjektMemo shoppingMemo = (ObjektMemo) ObjektMemosListView.getItemAtPosition(postitionInListView);
+                                Objekte shoppingMemo = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
                                 Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + shoppingMemo.toString());
                                 dataSource.deleteObjektMemo(shoppingMemo);
                             }
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                             boolean isChecked = touchedShoppingMemosPositions.valueAt(i);
                             if (isChecked) {
                                 int postitionInListView = touchedShoppingMemosPositions.keyAt(i);
-                                ObjektMemo shoppingMemo = (ObjektMemo) ObjektMemosListView.getItemAtPosition(postitionInListView);
+                                Objekte shoppingMemo = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
                                 Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + shoppingMemo.toString());
 
                                 AlertDialog editShoppingMemoDialog = createEditObjektMemoDialog(shoppingMemo);
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private AlertDialog createEditObjektMemoDialog(final ObjektMemo ObjektMemo) {
+    private AlertDialog createEditObjektMemoDialog(final Objekte Objekte) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -205,10 +206,10 @@ public class MainActivity extends AppCompatActivity {
         View dialogsView = inflater.inflate(R.layout.dialog_edit_objekt_memo, null);
 
         final EditText editTextNewQuantity = (EditText) dialogsView.findViewById(R.id.editText_new_quantity);
-        editTextNewQuantity.setText(String.valueOf(ObjektMemo.getQuantity()));
+        editTextNewQuantity.setText(String.valueOf(Objekte.getNumber()));
 
         final EditText editTextNewProduct = (EditText) dialogsView.findViewById(R.id.editText_new_product);
-        editTextNewProduct.setText(ObjektMemo.getProduct());
+        editTextNewProduct.setText(Objekte.getName());
 
         builder.setView(dialogsView)
                 .setTitle(R.string.dialog_title)
@@ -226,10 +227,10 @@ public class MainActivity extends AppCompatActivity {
                         int quantity = Integer.parseInt(quantityString);
 
                         // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
-                        ObjektMemo updatedObjektMemo = dataSource.updateObjektMemo(ObjektMemo.getId(), product, quantity, ObjektMemo.isChecked());
+                        Objekte updatedObjekte = dataSource.updateObjektMemo(Objekte.getId(), product, quantity, Objekte.isChecked());
 
-                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + ObjektMemo.getId() + " Inhalt: " + ObjektMemo.toString());
-                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjektMemo.getId() + " Inhalt: " + updatedObjektMemo.toString());
+                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.toString());
+                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.toString());
 
                         showAllListEntries();
                         dialog.dismiss();
@@ -244,13 +245,13 @@ public class MainActivity extends AppCompatActivity {
         return builder.create();
     }
 
-    private void initializeObjektMemosListView() {
-        List<ObjektMemo> emptyListForInitialization = new ArrayList<>();
+    private void initializeObjektInventurListView() {
+        List<Objekte> emptyListForInitialization = new ArrayList<>();
 
-        mObjektMemosListView = (ListView) findViewById(R.id.listview_objekt_memos);
+        mObjektInventurListView = (ListView) findViewById(R.id.listview_objekt_inventur);
 
         // Erstellen des ArrayAdapters für unseren ListView
-        ArrayAdapter<ObjektMemo> shoppingMemoArrayAdapter = new ArrayAdapter<ObjektMemo> (
+        ArrayAdapter<Objekte> shoppingMemoArrayAdapter = new ArrayAdapter<Objekte>(
                 this,
                 android.R.layout.simple_list_item_multiple_choice,
                 emptyListForInitialization) {
@@ -262,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 View view =  super.getView(position, convertView, parent);
                 TextView textView = (TextView) view;
 
-                ObjektMemo memo = (ObjektMemo) mObjektMemosListView.getItemAtPosition(position);
+                Objekte memo = (Objekte) mObjektInventurListView.getItemAtPosition(position);
 
                 // Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
                 if (memo.isChecked()) {
@@ -278,16 +279,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mObjektMemosListView.setAdapter(shoppingMemoArrayAdapter);
+        mObjektInventurListView.setAdapter(shoppingMemoArrayAdapter);
 
-        mObjektMemosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mObjektInventurListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ObjektMemo memo = (ObjektMemo) adapterView.getItemAtPosition(position);
+                Objekte memo = (Objekte) adapterView.getItemAtPosition(position);
 
                 // Hier den checked-Wert des Memo-Objekts umkehren, bspw. von true auf false
                 // Dann ListView neu zeichnen mit showAllListEntries()
-                ObjektMemo updatedShoppingMemo = dataSource.updateObjektMemo(memo.getId(), memo.getProduct(), memo.getQuantity(), (!memo.isChecked()));
+                Objekte updatedShoppingMemo = dataSource.updateObjektMemo(memo.getId(), memo.getName(), memo.getNumber(), (!memo.isChecked()));
                 Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedShoppingMemo.toString() + " ist: " + updatedShoppingMemo.isChecked());
                 showAllListEntries();
             }

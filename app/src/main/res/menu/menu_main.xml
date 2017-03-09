@@ -6,8 +6,15 @@
     tools:context=".MainActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_search" />
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="101"
         app:showAsAction="never" />
 </menu>
