@@ -3,32 +3,27 @@ package de.kumodo.rabbitsmart;
 /**
  * Created by l.schmidt on 06.03.2017.
  */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import android.view.inputmethod.InputMethodManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.widget.AbsListView;
-
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.TextView;
@@ -66,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void activateAddButton() {
-        Button buttonAddProduct = (Button) findViewById(R.id.button_add_product);
-        final EditText editTextQuantity = (EditText) findViewById(R.id.editText_quantity);
-        final EditText editTextProduct = (EditText) findViewById(R.id.editText_product);
+        Button buttonAddProduct = (Button) findViewById(R.id.button_add_objekt);
+        final EditText editTextQuantity = (EditText) findViewById(R.id.editText_number);
+        final EditText editTextProduct = (EditText) findViewById(R.id.editText_objekt);
 
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
