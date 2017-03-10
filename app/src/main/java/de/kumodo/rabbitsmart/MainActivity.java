@@ -5,6 +5,7 @@ package de.kumodo.rabbitsmart;
  */
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -291,7 +292,13 @@ public class MainActivity extends AppCompatActivity {
                 // Dann ListView neu zeichnen mit showAllListEntries()
                 Objekte updatedObjektMemo = dataSource.updateObjektMemo(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()));
                 Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.toString() + " ist: " + updatedObjektMemo.isChecked());
-                Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getNumber() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();
+
+                // Intent erzeugen und Starten der AktiendetailActivity mit explizitem Intent
+                Intent objektdetailIntent = new Intent(getApplicationContext(), ObjektdetailActivity.class);
+                objektdetailIntent.putExtra(Intent.EXTRA_TEXT, objekte.getId());
+                startActivity(objektdetailIntent);
+
+                // Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getNumber() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();
                 showAllListEntries();
             }
         });
