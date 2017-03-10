@@ -1,5 +1,7 @@
 package de.kumodo.rabbitsmart;
 
+import android.widget.Toast;
+
 /**
  * Created by l.schmidt on 07.03.2017.
  */
@@ -17,7 +19,6 @@ public class Objekte {
         this.id = id;
         this.checked = checked;
     }
-
 
     public String getName() {
         return name;
@@ -46,7 +47,7 @@ public class Objekte {
     }
 
     public boolean isChecked() {
-        return checked;
+            return checked;
     }
 
     public void setChecked (boolean checked) {

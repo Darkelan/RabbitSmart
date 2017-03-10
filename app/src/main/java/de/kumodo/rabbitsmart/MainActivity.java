@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,17 +149,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 boolean returnValue = true;
-                SparseBooleanArray touchedShoppingMemosPositions = ObjektInventurListView.getCheckedItemPositions();
+                SparseBooleanArray touchedObjektPositions = ObjektInventurListView.getCheckedItemPositions();
 
                 switch (item.getItemId()) {
                     case R.id.cab_delete:
-                        for (int i = 0; i < touchedShoppingMemosPositions.size(); i++) {
-                            boolean isChecked = touchedShoppingMemosPositions.valueAt(i);
+                        for (int i = 0; i < touchedObjektPositions.size(); i++) {
+                            boolean isChecked = touchedObjektPositions.valueAt(i);
                             if (isChecked) {
-                                int postitionInListView = touchedShoppingMemosPositions.keyAt(i);
-                                Objekte shoppingMemo = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
-                                Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + shoppingMemo.toString());
-                                dataSource.deleteObjektMemo(shoppingMemo);
+                                int postitionInListView = touchedObjektPositions.keyAt(i);
+                                Objekte objekt = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
+                                Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + objekt.toString());
+                                dataSource.deleteObjektMemo(objekt);
                             }
                         }
                         showAllListEntries();
@@ -167,10 +168,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.cab_change:
                         Log.d(LOG_TAG, "Eintrag ändern");
-                        for (int i = 0; i < touchedShoppingMemosPositions.size(); i++) {
-                            boolean isChecked = touchedShoppingMemosPositions.valueAt(i);
+                        for (int i = 0; i < touchedObjektPositions.size(); i++) {
+                            boolean isChecked = touchedObjektPositions.valueAt(i);
                             if (isChecked) {
-                                int postitionInListView = touchedShoppingMemosPositions.keyAt(i);
+                                int postitionInListView = touchedObjektPositions.keyAt(i);
                                 Objekte shoppingMemo = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
                                 Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + shoppingMemo.toString());
 
@@ -263,10 +264,11 @@ public class MainActivity extends AppCompatActivity {
                 View view =  super.getView(position, convertView, parent);
                 TextView textView = (TextView) view;
 
-                Objekte memo = (Objekte) mObjektInventurListView.getItemAtPosition(position);
+                Objekte objekt = (Objekte) mObjektInventurListView.getItemAtPosition(position);
 
                 // Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
-                if (memo.isChecked()) {
+                if (objekt.isChecked()) {
+                    Toast.makeText(getApplicationContext(), "Objekt " + objekt.getNumber() +" deaktiviert", Toast.LENGTH_SHORT).show();
                     textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     textView.setTextColor(Color.rgb(175,175,175));
                 }
@@ -274,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
                     textView.setPaintFlags( textView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                     textView.setTextColor(Color.DKGRAY);
                 }
-
                 return view;
             }
         };
@@ -284,12 +285,13 @@ public class MainActivity extends AppCompatActivity {
         mObjektInventurListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Objekte memo = (Objekte) adapterView.getItemAtPosition(position);
+                Objekte objekte = (Objekte) adapterView.getItemAtPosition(position);
 
                 // Hier den checked-Wert des Memo-Objekts umkehren, bspw. von true auf false
                 // Dann ListView neu zeichnen mit showAllListEntries()
-                Objekte updatedShoppingMemo = dataSource.updateObjektMemo(memo.getId(), memo.getName(), memo.getNumber(), (!memo.isChecked()));
-                Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedShoppingMemo.toString() + " ist: " + updatedShoppingMemo.isChecked());
+                Objekte updatedObjektMemo = dataSource.updateObjektMemo(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()));
+                Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.toString() + " ist: " + updatedObjektMemo.isChecked());
+                Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getNumber() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();
                 showAllListEntries();
             }
         });
@@ -311,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(getApplicationContext(), "Einstellungen gedrückt!", Toast.LENGTH_LONG).show();
             return true;
         }
 
