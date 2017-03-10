@@ -267,16 +267,16 @@ public class MainActivity extends AppCompatActivity {
 
                 Objekte objekt = (Objekte) mObjektInventurListView.getItemAtPosition(position);
 
-                // Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
+                /* Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
                 if (objekt.isChecked()) {
-                    Toast.makeText(getApplicationContext(), "Objekt " + objekt.getNumber() +" deaktiviert", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), "Objekt " + objekt.getNumber() +" deaktiviert", Toast.LENGTH_SHORT).show();
                     textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     textView.setTextColor(Color.rgb(175,175,175));
                 }
                 else {
                     textView.setPaintFlags( textView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                     textView.setTextColor(Color.DKGRAY);
-                }
+                }*/
                 return view;
             }
         };
@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Intent erzeugen und Starten der AktiendetailActivity mit explizitem Intent
                 Intent objektdetailIntent = new Intent(getApplicationContext(), ObjektdetailActivity.class);
-                objektdetailIntent.putExtra(Intent.EXTRA_TEXT, objekte.getId());
+                objektdetailIntent.putExtra(Intent.EXTRA_TEXT, updatedObjektMemo.toString());
                 startActivity(objektdetailIntent);
 
                 // Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getNumber() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();

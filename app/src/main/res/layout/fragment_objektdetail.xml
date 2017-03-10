@@ -10,7 +10,7 @@
     tools:context="de.kumodo.rabbitsmart.ObjektdetailFragment">
 
     <TextView
-        android:id="@+id/aktiendetail_text"
+        android:id="@+id/objektdetail_text"
         android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
