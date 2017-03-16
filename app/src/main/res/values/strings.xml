@@ -15,4 +15,5 @@
     <string name="dialog_button_positive">Ändern</string>
     <string name="dialog_button_negative">Abbrechen</string>
     <string name="title_activity_objektdetail">Objektdetails</string>
+    <string name="title_activity_einstellungen">Einstellungen</string>
 </resources>
