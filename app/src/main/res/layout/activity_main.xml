@@ -26,17 +26,17 @@
             android:layout_weight="1" />
 
         <EditText
+            android:id="@+id/editText_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/editText_hint_name"
-            android:id="@+id/editText_objekt"
-            android:layout_weight="4" />
+            android:layout_weight="4"
+            android:hint="@string/editText_hint_name" />
 
         <Button
+            android:id="@+id/button_add_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_add_product"
-            android:id="@+id/button_add_objekt" />
+            android:text="@string/button_add_product" />
     </LinearLayout>
 
     <ListView

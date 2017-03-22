@@ -291,9 +291,9 @@ public class MainActivity extends AppCompatActivity {
                 // Hier den checked-Wert des Memo-Objekts umkehren, bspw. von true auf false
                 // Dann ListView neu zeichnen mit showAllListEntries()
                 Objekte updatedObjektMemo = dataSource.updateObjektMemo(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()));
-                Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.toString() + " ist: " + updatedObjektMemo.isChecked());
+                Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.getName().toString() + " ist: " + updatedObjektMemo.isChecked());
 
-                // Intent erzeugen und Starten der AktiendetailActivity mit explizitem Intent
+                // Intent erzeugen und Starten der ObjektdetailActivity mit explizitem Intent
                 Intent objektdetailIntent = new Intent(getApplicationContext(), ObjektdetailActivity.class);
                 objektdetailIntent.putExtra(Intent.EXTRA_TEXT, updatedObjektMemo.toString());
                 startActivity(objektdetailIntent);
