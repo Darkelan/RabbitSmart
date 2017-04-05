@@ -25,6 +25,10 @@ public class ObjektInventurDataSource {
             ObjektInventurDbHelper.COLUMN_NAME,
             ObjektInventurDbHelper.COLUMN_NUMBER,
             ObjektInventurDbHelper.COLUMN_CHECKED
+            //ObjektInventurDbHelper.COLUMN_SN,
+            //ObjektInventurDbHelper.COLUMN_AN_DATUM,
+            //ObjektInventurDbHelper.COLUMN_KOSTEN,
+            //ObjektInventurDbHelper.COLUMN_ANWENDER
     };
 
     public ObjektInventurDataSource(Context context) {

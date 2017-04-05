@@ -15,7 +15,7 @@ public class ObjektInventurDbHelper extends SQLiteOpenHelper {
     private static final String LOG_TAG = ObjektInventurDbHelper.class.getSimpleName();
 
     public static final String DB_NAME = "objekt_list.db";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 7;
 
     public static final String TABLE_OBJEKT_LIST = "objekt_list";
 
