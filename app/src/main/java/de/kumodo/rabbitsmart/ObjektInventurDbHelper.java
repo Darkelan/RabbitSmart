@@ -15,12 +15,16 @@ public class ObjektInventurDbHelper extends SQLiteOpenHelper {
     private static final String LOG_TAG = ObjektInventurDbHelper.class.getSimpleName();
 
     public static final String DB_NAME = "objekt_list.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public static final String TABLE_OBJEKT_LIST = "objekt_list";
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "product";
+    public static final String COLUMN_SN = "sn";
+    public static final String COLUMN_KOSTEN = "kosten";
+    public static final String COLUMN_AN_DATUM = "an_datum";
+    public static final String COLUMN_ANWENDER = "anwender";
     public static final String COLUMN_NUMBER = "quantity";
     public static final String COLUMN_CHECKED = "checked";
 
@@ -29,6 +33,10 @@ public class ObjektInventurDbHelper extends SQLiteOpenHelper {
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAME + " TEXT NOT NULL, " +
                     COLUMN_NUMBER + " INTEGER NOT NULL, " +
+                    COLUMN_SN + " TEXT, " +
+                    COLUMN_KOSTEN + " TEXT, " +
+                    COLUMN_AN_DATUM + " TEXT, " +
+                    COLUMN_ANWENDER + " TEXT, " +
                     COLUMN_CHECKED + " BOOLEAN NOT NULL DEFAULT 0);";
 
     public static final String SQL_DROP = "DROP TABLE IF EXISTS " + TABLE_OBJEKT_LIST;
