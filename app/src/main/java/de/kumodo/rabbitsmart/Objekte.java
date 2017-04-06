@@ -13,17 +13,17 @@ public class Objekte {
     private long id;
     private boolean checked;
     private String an_datum;
-    private float kosten;
-    private String serial_number;
+    private String kosten;
+    private String sn;
     private String anwender;
 
 
-    public Objekte(String name, int number, long id, boolean checked) {
+    public Objekte(String name, int number, long id, boolean checked, String sn, String an_datum, String kosten, String anwender ) {
         this.name = name;
         this.number = number;
         this.an_datum = an_datum;
         this.kosten = kosten;
-        this.serial_number = serial_number;
+        this.sn = sn;
         this.anwender = anwender;
         this.id = id;
         this.checked = checked;
@@ -45,20 +45,20 @@ public class Objekte {
         this.an_datum = an_datum;
     }
 
-    public float getKosten() {
+    public String getKosten() {
         return kosten;
     }
 
-    public void setKosten(float kosten) {
+    public void setKosten(String kosten) {
         this.kosten = kosten;
     }
 
-    public String getSerial_number() {
-        return serial_number;
+    public String getSN() {
+        return sn;
     }
 
-    public void setSerial_number(String serial_number) {
-        this.serial_number = serial_number;
+    public void setSN(String sn) {
+        this.sn = sn;
     }
 
     public String getAnwender() {
@@ -95,7 +95,7 @@ public class Objekte {
 
     @Override
     public String toString() {
-        String output = number + " -> " + name + " -> " + serial_number;
+        String output = number + " -> " + name + " -> " + sn;
 
         return output;
     }

@@ -24,11 +24,11 @@ public class ObjektInventurDataSource {
             ObjektInventurDbHelper.COLUMN_ID,
             ObjektInventurDbHelper.COLUMN_NAME,
             ObjektInventurDbHelper.COLUMN_NUMBER,
-            ObjektInventurDbHelper.COLUMN_CHECKED
-            //ObjektInventurDbHelper.COLUMN_SN,
-            //ObjektInventurDbHelper.COLUMN_AN_DATUM,
-            //ObjektInventurDbHelper.COLUMN_KOSTEN,
-            //ObjektInventurDbHelper.COLUMN_ANWENDER
+            ObjektInventurDbHelper.COLUMN_CHECKED,
+            ObjektInventurDbHelper.COLUMN_SN,
+            ObjektInventurDbHelper.COLUMN_AN_DATUM,
+            ObjektInventurDbHelper.COLUMN_KOSTEN,
+            ObjektInventurDbHelper.COLUMN_ANWENDER
     };
 
     public ObjektInventurDataSource(Context context) {
@@ -47,10 +47,14 @@ public class ObjektInventurDataSource {
         Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
-    public Objekte createObjektMemo(String product, int quantity) {
+    public Objekte createObjektMemo(String product, int quantity, String sn, String an_datum, String kosten, String anwender) {
         ContentValues values = new ContentValues();
         values.put(ObjektInventurDbHelper.COLUMN_NAME, product);
         values.put(ObjektInventurDbHelper.COLUMN_NUMBER, quantity);
+        values.put(ObjektInventurDbHelper.COLUMN_SN, sn);
+        values.put(ObjektInventurDbHelper.COLUMN_AN_DATUM, an_datum);
+        values.put(ObjektInventurDbHelper.COLUMN_KOSTEN, kosten);
+        values.put(ObjektInventurDbHelper.COLUMN_ANWENDER, anwender);
 
         long insertId = database.insert(ObjektInventurDbHelper.TABLE_OBJEKT_LIST, null, values);
 
@@ -75,13 +79,17 @@ public class ObjektInventurDataSource {
         Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id + " Inhalt: " + objekte.toString());
     }
 
-    public Objekte updateObjektMemo(long id, String newProduct, int newQuantity, boolean newChecked) {
+    public Objekte updateObjektMemo(long id, String newProduct, int newQuantity, boolean newChecked, String newsn, String newan_datum, String newkosten, String newanwender) {
         int intValueChecked = (newChecked) ? 1 : 0;
 
         ContentValues values = new ContentValues();
         values.put(ObjektInventurDbHelper.COLUMN_NAME, newProduct);
         values.put(ObjektInventurDbHelper.COLUMN_NUMBER, newQuantity);
         values.put(ObjektInventurDbHelper.COLUMN_CHECKED, intValueChecked);
+        values.put(ObjektInventurDbHelper.COLUMN_SN, newsn);
+        values.put(ObjektInventurDbHelper.COLUMN_AN_DATUM, newan_datum);
+        values.put(ObjektInventurDbHelper.COLUMN_KOSTEN, newkosten);
+        values.put(ObjektInventurDbHelper.COLUMN_ANWENDER, newanwender);
 
         database.update(ObjektInventurDbHelper.TABLE_OBJEKT_LIST,
                 values,
@@ -104,15 +112,23 @@ public class ObjektInventurDataSource {
         int idProduct = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_NAME);
         int idQuantity = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_NUMBER);
         int idChecked = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_CHECKED);
+        int idSN = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_SN);
+        int idAn_datum = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_AN_DATUM);
+        int idKosten = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_KOSTEN);
+        int idAnwender = cursor.getColumnIndex(ObjektInventurDbHelper.COLUMN_ANWENDER);
 
         String product = cursor.getString(idProduct);
         int quantity = cursor.getInt(idQuantity);
         long id = cursor.getLong(idIndex);
         int intValueChecked = cursor.getInt(idChecked);
+        String sn = cursor.getString(idSN);
+        String an_datum = cursor.getString(idAn_datum);
+        String kosten = cursor.getString(idKosten);
+        String anwender = cursor.getString(idAnwender);
 
         boolean isChecked = (intValueChecked != 0);
 
-        Objekte objekte = new Objekte(product, quantity, id, isChecked);
+        Objekte objekte = new Objekte(product, quantity, id, isChecked, sn, an_datum, kosten, anwender);
 
         return objekte;
     }

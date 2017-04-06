@@ -6,8 +6,6 @@ package de.kumodo.rabbitsmart;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,8 +84,12 @@ public class MainActivity extends AppCompatActivity {
                 int quantity = Integer.parseInt(numberString);
                 editTextNumber.setText("");
                 editTextObjekt.setText("");
+                String sn = " ";
+                String an_datum = " ";
+                String kosten = " ";
+                String anwender = " ";
 
-                dataSource.createObjektMemo(objekt, quantity);
+                dataSource.createObjektMemo(objekt, quantity, sn, an_datum, kosten, anwender);
 
                 InputMethodManager inputMethodManager;
                 inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -176,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                                 Objekte shoppingMemo = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
                                 Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + shoppingMemo.toString());
 
-                                AlertDialog editShoppingMemoDialog = createEditObjektMemoDialog(shoppingMemo);
+                                AlertDialog editShoppingMemoDialog = EditObjektDialog(shoppingMemo);
                                 editShoppingMemoDialog.show();
                             }
                         }
@@ -200,18 +201,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private AlertDialog createEditObjektMemoDialog(final Objekte Objekte) {
+    private AlertDialog EditObjektDialog(final Objekte Objekte) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
 
-        View dialogsView = inflater.inflate(R.layout.dialog_edit_objekt_memo, null);
+        View dialogsView = inflater.inflate(R.layout.dialog_edit_objekt, null);
 
         final EditText editTextNewQuantity = (EditText) dialogsView.findViewById(R.id.editText_new_quantity);
         editTextNewQuantity.setText(String.valueOf(Objekte.getNumber()));
 
         final EditText editTextNewProduct = (EditText) dialogsView.findViewById(R.id.editText_new_product);
         editTextNewProduct.setText(Objekte.getName());
+
+        final EditText editTextNewSN = (EditText) dialogsView.findViewById((R.id.editText_new_serial));
+        editTextNewSN.setText((Objekte.getSN()));
 
         builder.setView(dialogsView)
                 .setTitle(R.string.dialog_title)
@@ -228,11 +232,16 @@ public class MainActivity extends AppCompatActivity {
 
                         int quantity = Integer.parseInt(quantityString);
 
-                        // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
-                        Objekte updatedObjekte = dataSource.updateObjektMemo(Objekte.getId(), product, quantity, Objekte.isChecked());
+                        String sn = editTextNewSN.getText().toString();
+                        String an_datum = "TEST-AN_DATUM";
+                        String kosten = "TEST-KOSTEN";
+                        String anwender = "TEST-ANWENDER";
 
-                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.toString());
-                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.toString());
+                        // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
+                        Objekte updatedObjekte = dataSource.updateObjektMemo(Objekte.getId(), product, quantity, Objekte.isChecked(),sn, an_datum,kosten, anwender);
+
+                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.toString() + " Seriennummer: " + Objekte.getSN());
+                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.toString() + " Seriennummer: " + updatedObjekte.getSN());
 
                         showAllListEntries();
                         dialog.dismiss();
@@ -290,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Hier den checked-Wert des Memo-Objekts umkehren, bspw. von true auf false
                 // Dann ListView neu zeichnen mit showAllListEntries()
-                Objekte updatedObjektMemo = dataSource.updateObjektMemo(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()));
+                Objekte updatedObjektMemo = dataSource.updateObjektMemo(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()), objekte.getSN(), objekte. getAn_datum(), objekte.getKosten(), objekte.getAnwender());
                 Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.getName().toString() + " ist: " + updatedObjektMemo.isChecked());
 
                 // Intent erzeugen und Starten der ObjektdetailActivity mit explizitem Intent
