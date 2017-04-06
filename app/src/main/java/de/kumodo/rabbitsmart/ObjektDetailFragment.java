@@ -23,7 +23,7 @@ public class ObjektDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_objektdetail, container, false);
 
-        // Die ObjektdetailActivity wurde über einen Intent aufgerufen
+        // Die ObjektDetailActivity wurde über einen Intent aufgerufen
         // Wir lesen aus dem empfangenen Intent die übermittelten Daten aus
         Intent empfangenerIntent = getActivity().getIntent();
         if (empfangenerIntent != null && empfangenerIntent.hasExtra(Intent.EXTRA_TEXT)) {

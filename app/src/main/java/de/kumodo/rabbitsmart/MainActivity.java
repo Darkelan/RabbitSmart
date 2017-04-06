@@ -6,6 +6,8 @@ package de.kumodo.rabbitsmart;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -276,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Objekte objekt = (Objekte) mObjektInventurListView.getItemAtPosition(position);
 
-                /* Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
+                //Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
                 if (objekt.isChecked()) {
                     // Toast.makeText(getApplicationContext(), "Objekt " + objekt.getNumber() +" deaktiviert", Toast.LENGTH_SHORT).show();
                     textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -285,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     textView.setPaintFlags( textView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                     textView.setTextColor(Color.DKGRAY);
-                }*/
+                }
                 return view;
             }
         };
@@ -302,11 +304,11 @@ public class MainActivity extends AppCompatActivity {
                 Objekte updatedObjektMemo = dataSource.updateObjekt(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()), objekte.getSN(), objekte. getAn_datum(), objekte.getKosten(), objekte.getAnwender());
                 Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.getName().toString() + " ist: " + updatedObjektMemo.isChecked());
 
-                // Intent erzeugen und Starten der ObjektdetailActivity mit explizitem Intent
-                Intent objektdetailIntent = new Intent(getApplicationContext(), ObjektdetailActivity.class);
+                /* Intent erzeugen und Starten der ObjektDetailActivity mit explizitem Intent
+                Intent objektdetailIntent = new Intent(getApplicationContext(), ObjektDetailActivity.class);
                 objektdetailIntent.putExtra(Intent.EXTRA_TEXT, updatedObjektMemo.toString());
                 startActivity(objektdetailIntent);
-
+                */
                 // Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getNumber() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();
                 showAllListEntries();
             }
