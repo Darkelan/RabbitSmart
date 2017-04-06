@@ -14,11 +14,16 @@ public class ObjektDbHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG = ObjektDbHelper.class.getSimpleName();
 
+    //DB-Eigenschaften
     public static final String DB_NAME = "objekt_list.db";
     public static final int DB_VERSION = 7;
 
+    //Tabelleneigenschaften
     public static final String TABLE_OBJEKT_LIST = "objekt_list";
 
+    //Definition der Spalten. Die ID-Spalte wird als Primärschlüssel genutzt werden und trägt den Namen _id.
+    //Es ist sehr ratsam diese Bezeichnung zu wählen, da einige Klassen aus der Android-API,
+    //bspw. die Klasse SimpleCursorAdapter, diese Bezeichnung zwingend erwarten.
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "product";
     public static final String COLUMN_SN = "sn";
@@ -28,6 +33,7 @@ public class ObjektDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NUMBER = "quantity";
     public static final String COLUMN_CHECKED = "checked";
 
+    //Definition des SQL-Strings, mit dem die Tabelle in der SQLite Datenbank erstellt wird
     public static final String SQL_CREATE =
             "CREATE TABLE " + TABLE_OBJEKT_LIST +
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -42,7 +48,10 @@ public class ObjektDbHelper extends SQLiteOpenHelper {
     public static final String SQL_DROP = "DROP TABLE IF EXISTS " + TABLE_OBJEKT_LIST;
 
     public ObjektDbHelper(Context context) {
-        //super(context, "PLATZHALTER_DATENBANKNAME", null, 1);
+        //Durch den Aufruf des Super-Konstruktors wird eine Datenbank erzeugt, die ihre Daten
+        //in der Datei “shopping_list.db” speichert und die Versionsnummer X trägt.
+        //Die Versionsnummer ist für spätere Upgrades der SQLite Datenbank wichtig,
+        //wenn bspw. eine weitere Spalte der Tabelle hinzugefügt werden soll.
         super(context, DB_NAME, null, DB_VERSION);
         Log.d(LOG_TAG, "DbHelper hat die Datenbank: " + getDatabaseName() + " erzeugt.");
     }
