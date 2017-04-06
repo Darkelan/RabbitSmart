@@ -13,9 +13,9 @@ import android.content.Intent;
 import android.widget.TextView;
 
 
-public class ObjektdetailFragment extends Fragment {
+public class ObjektDetailFragment extends Fragment {
 
-    public ObjektdetailFragment() {
+    public ObjektDetailFragment() {
     }
 
     @Override

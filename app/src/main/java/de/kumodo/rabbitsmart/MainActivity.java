@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private ObjektInventurDataSource dataSource;
+    private ObjektDataSource dataSource;
     private ListView mObjektInventurListView;
 
     @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(LOG_TAG, "Das Datenquellen-Objekt wird angelegt.");
-        dataSource = new ObjektInventurDataSource(this);
+        dataSource = new ObjektDataSource(this);
 
         initializeObjektInventurListView();
         activateAddButton();
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAllListEntries() {
-        List<Objekte> objekteList = dataSource.getAllObjektMemos();
+        List<Objekte> objekteList = dataSource.getAllObjekt();
 
         ArrayAdapter<Objekte> adapter = (ArrayAdapter<Objekte>) mObjektInventurListView.getAdapter();
 
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 String kosten = " ";
                 String anwender = " ";
 
-                dataSource.createObjektMemo(objekt, quantity, sn, an_datum, kosten, anwender);
+                dataSource.createObjekt(objekt, quantity, sn, an_datum, kosten, anwender);
 
                 InputMethodManager inputMethodManager;
                 inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                 int postitionInListView = touchedObjektPositions.keyAt(i);
                                 Objekte objekt = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
                                 Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + objekt.toString());
-                                dataSource.deleteObjektMemo(objekt);
+                                dataSource.deleteObjekt(objekt);
                             }
                         }
                         showAllListEntries();
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
                         String anwender = "TEST-ANWENDER";
 
                         // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
-                        Objekte updatedObjekte = dataSource.updateObjektMemo(Objekte.getId(), product, quantity, Objekte.isChecked(),sn, an_datum,kosten, anwender);
+                        Objekte updatedObjekte = dataSource.updateObjekt(Objekte.getId(), product, quantity, Objekte.isChecked(),sn, an_datum,kosten, anwender);
 
                         Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.toString() + " Seriennummer: " + Objekte.getSN());
                         Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.toString() + " Seriennummer: " + updatedObjekte.getSN());
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Hier den checked-Wert des Memo-Objekts umkehren, bspw. von true auf false
                 // Dann ListView neu zeichnen mit showAllListEntries()
-                Objekte updatedObjektMemo = dataSource.updateObjektMemo(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()), objekte.getSN(), objekte. getAn_datum(), objekte.getKosten(), objekte.getAnwender());
+                Objekte updatedObjektMemo = dataSource.updateObjekt(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()), objekte.getSN(), objekte. getAn_datum(), objekte.getKosten(), objekte.getAnwender());
                 Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.getName().toString() + " ist: " + updatedObjektMemo.isChecked());
 
                 // Intent erzeugen und Starten der ObjektdetailActivity mit explizitem Intent

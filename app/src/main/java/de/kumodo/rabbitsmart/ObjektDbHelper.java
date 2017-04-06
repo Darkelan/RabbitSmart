@@ -10,9 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
-public class ObjektInventurDbHelper extends SQLiteOpenHelper {
+public class ObjektDbHelper extends SQLiteOpenHelper {
 
-    private static final String LOG_TAG = ObjektInventurDbHelper.class.getSimpleName();
+    private static final String LOG_TAG = ObjektDbHelper.class.getSimpleName();
 
     public static final String DB_NAME = "objekt_list.db";
     public static final int DB_VERSION = 7;
@@ -41,7 +41,7 @@ public class ObjektInventurDbHelper extends SQLiteOpenHelper {
 
     public static final String SQL_DROP = "DROP TABLE IF EXISTS " + TABLE_OBJEKT_LIST;
 
-    public ObjektInventurDbHelper(Context context) {
+    public ObjektDbHelper(Context context) {
         //super(context, "PLATZHALTER_DATENBANKNAME", null, 1);
         super(context, DB_NAME, null, DB_VERSION);
         Log.d(LOG_TAG, "DbHelper hat die Datenbank: " + getDatabaseName() + " erzeugt.");
