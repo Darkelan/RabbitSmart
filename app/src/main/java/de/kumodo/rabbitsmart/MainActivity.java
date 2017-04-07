@@ -62,17 +62,38 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private void activateAddButton() {
+    /*Mit den folgenden Anweisungen fragen wir die Referenzen zu den Widget-Objekten an.
+    Diese sind der Add-Button und die beiden EditText-Felder.*/
+
+   private void activateAddButton() {
         Button buttonAddProduct = (Button) findViewById(R.id.button_add_objekt);
         final EditText editTextNumber = (EditText) findViewById(R.id.editText_number);
         final EditText editTextObjekt = (EditText) findViewById(R.id.editText_objekt);
 
+        /*Den OnClickListener registrieren wir mit den Zeilen 87 bis 120 für das Button-Objekt.
+        Dazu verwenden wir die Methode setOnClickListener(), die wir auf dem Button-Objekt aufrufen
+        und ihr ein OnClickListener-Objekt übergeben.
+
+        Das OnClickListener-Objekt ist nichts Besonderes. Es besitzt als Elternklasse die Object-Klasse
+        und muss die Interface-Methode onClick() implementieren. Die onClick() Methode wird über einen
+        Callback aufgerufen, der für das View-Objekt, unseren Button, mit der Methode setOnClickListener()
+        registriert wurde.*/
+
         buttonAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
+
+            /* Wir erzeugen das OnClickListener-Objekt mit dem new Schlüsselwort und definieren es anschließend
+            mit Hilfe einer anonymen Klasse, die nur eine einzige Methode besitzt, die onClick() Methode.
+            In der onClick() Methode lesen wir die beiden Textfelder aus.*/
+
             public void onClick(View v) {
 
                 String numberString = editTextNumber.getText().toString();
                 String objekt = editTextObjekt.getText().toString();
+
+                /*Mit den if-Anweisungen prüfen wir, ob in dem jeweiligen Textfeld etwas
+                eingetragen wurde. Falls ein Feld leer ist, geben wir über die Methode setError() eine Fehlermeldung
+                aus und beenden die onClick() Methode.*/
 
                 if (TextUtils.isEmpty(numberString)) {
                     editTextNumber.setError(getString(R.string.editText_errorMessage));
@@ -83,15 +104,26 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+                /*Den Wert des EditText-Feldes editTextQuantity wandeln wir in einen Integer-Wert um,
+                da die Werte der Textfelder nur als String-Objekte vorliegen. Mit den beiden Anweisungen in den
+                Zeilen 119 und 120 setzen wir den Wert der Textfelder zurück und löschen damit die eingetragenen Werte.*/
+
                 int quantity = Integer.parseInt(numberString);
                 editTextNumber.setText("");
                 editTextObjekt.setText("");
-                String sn = " ";
-                String an_datum = " ";
-                String kosten = " ";
-                String anwender = " ";
+                String sn = "Seriennummer";
+                String an_datum = "Anschaffungsdatum ";
+                String kosten = "Anschaffungskosten";
+                String anwender = "Anwender";
+
+                /*Anschließend speichern wir die ausgelesenen Werte in die SQLite Datenbank.
+                Die Arbeit überlassen wir unserer Datenquelle dataSource. Wir müssen ihrer Methode createShoppingMemo()
+                nur die ausgelesenen Werte übergeben, den Rest übernimmt sie für uns.*/
 
                 dataSource.createObjekt(objekt, quantity, sn, an_datum, kosten, anwender);
+
+                /* Mit den folgenden Anweisungen lassen wir das Eingabefeld verschwinden, so dass unsere Einkaufsliste komplett zu sehen ist.
+                Anschließend geben wir alle Einträge der SQLite Datenbank mit Hilfe des ListViews auf dem Display aus.*/
 
                 InputMethodManager inputMethodManager;
                 inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

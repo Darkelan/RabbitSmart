@@ -103,8 +103,17 @@ public class ObjektDataSource {
         return Objekte;
     }
 
+    /* Die delete() Methode wird auf dem SQLiteDatabase-Objekt aufgerufen.
+    Als Argumente wird ihr der Name unserer Tabelle und der Such-String mit der ID des zu löschenden
+    Datensatzes übergeben. Das dritte Argument wird in diesem Fall nicht benötigt und ist null.*/
+
     public void deleteObjekt(Objekte objekte) {
         long id = objekte.getId();
+
+        /*Die ID des zu löschenden Datensatzes lesen wir aus dem übergebenen Objekt-Objekt aus.
+        Anschließend führen wir die Lösch-Operation auf dem SQLiteDatabase-Objekt aus.
+
+        Zu Testzwecken geben wir die ID und den Inhalt des gelöschten Datensatzes in einer Log-Meldung aus.*/
 
         database.delete(ObjektDbHelper.TABLE_OBJEKT_LIST,
                 ObjektDbHelper.COLUMN_ID + "=" + id,
