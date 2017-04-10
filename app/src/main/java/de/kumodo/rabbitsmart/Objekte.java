@@ -13,8 +13,6 @@ public class Objekte {
     private long id;
     private boolean checked;
 
-
-
     public Objekte(String name, int number, long id, boolean checked, String sn, String an_datum, String kosten, String anwender ) {
         this.name = name;
         this.number = number;
@@ -95,8 +93,8 @@ public class Objekte {
     //Methode toString überschreiben
     @Override
     public String toString() {
-        String output = number + " -> " + name + " -> " + sn;
+       String output = number + " -> " + name + " -> " + sn;
 
-        return output;
+       return output;
     }
 }

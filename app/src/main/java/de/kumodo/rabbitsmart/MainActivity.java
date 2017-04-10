@@ -251,6 +251,15 @@ public class MainActivity extends AppCompatActivity {
         final EditText editTextNewSN = (EditText) dialogsView.findViewById((R.id.editText_new_serial));
         editTextNewSN.setText((Objekte.getSN()));
 
+        final EditText editTextNewAn_Datum = (EditText) dialogsView.findViewById((R.id.editText_new_an_datum));
+        editTextNewAn_Datum.setText((Objekte.getAn_datum()));
+
+        final EditText editTextNewKosten = (EditText) dialogsView.findViewById((R.id.editText_new_kosten));
+        editTextNewKosten.setText((Objekte.getKosten()));
+
+        final EditText editTextNewAnwender = (EditText) dialogsView.findViewById((R.id.editText_new_anwender));
+        editTextNewAnwender.setText((Objekte.getAnwender()));
+
         builder.setView(dialogsView)
                 .setTitle(R.string.dialog_title)
                 .setPositiveButton(R.string.dialog_button_positive, new DialogInterface.OnClickListener() {
@@ -267,15 +276,15 @@ public class MainActivity extends AppCompatActivity {
                         int quantity = Integer.parseInt(quantityString);
 
                         String sn = editTextNewSN.getText().toString();
-                        String an_datum = "TEST-AN_DATUM";
-                        String kosten = "TEST-KOSTEN";
-                        String anwender = "TEST-ANWENDER";
+                        String an_datum = editTextNewAn_Datum.getText().toString();
+                        String kosten = editTextNewKosten.getText().toString();
+                        String anwender = editTextNewAnwender.getText().toString();
 
                         // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
                         Objekte updatedObjekte = dataSource.updateObjekt(Objekte.getId(), product, quantity, Objekte.isChecked(),sn, an_datum,kosten, anwender);
 
-                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.toString() + " Seriennummer: " + Objekte.getSN());
-                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.toString() + " Seriennummer: " + updatedObjekte.getSN());
+                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.getName() + " Seriennummer: " + Objekte.getSN() + " Anschaffungsdatum: " + Objekte.getAn_datum()+ " Kosten: " + Objekte.getKosten()+ " Anwender: " + Objekte.getAnwender());
+                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.getName() + " Seriennummer: " + updatedObjekte.getSN()+ " Anschaffungsdatum: " + updatedObjekte.getAn_datum()+ " Kosten: " + updatedObjekte.getKosten()+ " Anwender: " + updatedObjekte.getAnwender());
 
                         showAllListEntries();
                         dialog.dismiss();
@@ -296,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
         mObjektInventurListView = (ListView) findViewById(R.id.listview_objekt_inventur);
 
         // Erstellen des ArrayAdapters für unseren ListView
-        ArrayAdapter<Objekte> shoppingMemoArrayAdapter = new ArrayAdapter<Objekte>(
+        ArrayAdapter<Objekte> ObjektArrayAdapter = new ArrayAdapter<Objekte>(
                 this,
                 android.R.layout.simple_list_item_multiple_choice,
                 emptyListForInitialization) {
@@ -324,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mObjektInventurListView.setAdapter(shoppingMemoArrayAdapter);
+        mObjektInventurListView.setAdapter(ObjektArrayAdapter);
 
         mObjektInventurListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
