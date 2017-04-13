@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 da die Werte der Textfelder nur als String-Objekte vorliegen. Mit den beiden Anweisungen in den
                 Zeilen 119 und 120 setzen wir den Wert der Textfelder zurück und löschen damit die eingetragenen Werte.*/
 
-                int quantity = Integer.parseInt(numberString);
+                int id_objekt = Integer.parseInt(numberString);
                 editTextNumber.setText("");
                 editTextObjekt.setText("");
                 String sn = "Seriennummer";
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 Die Arbeit überlassen wir unserer Datenquelle dataSource. Wir müssen ihrer Methode createShoppingMemo()
                 nur die ausgelesenen Werte übergeben, den Rest übernimmt sie für uns.*/
 
-                dataSource.createObjekt(objekt, quantity, sn, an_datum, kosten, anwender);
+                dataSource.createObjekt(objekt, id_objekt, sn, an_datum, kosten, anwender);
 
                 /* Mit den folgenden Anweisungen lassen wir das Eingabefeld verschwinden, so dass unsere Einkaufsliste komplett zu sehen ist.
                 Anschließend geben wir alle Einträge der SQLite Datenbank mit Hilfe des ListViews auf dem Display aus.*/
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                 if (objekt.isChecked()) {
                     // Toast.makeText(getApplicationContext(), "Objekt " + objekt.getNumber() +" deaktiviert", Toast.LENGTH_SHORT).show();
                     textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    textView.setTextColor(Color.rgb(175,175,175));
+                    textView.setTextColor(Color.rgb(255,0,0));
                 }
                 else {
                     textView.setPaintFlags( textView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
