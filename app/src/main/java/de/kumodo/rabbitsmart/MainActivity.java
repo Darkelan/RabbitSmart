@@ -203,16 +203,33 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.cab_change:
-                        Log.d(LOG_TAG, "Eintrag ändern");
+                        Log.d(LOG_TAG, "Objekt ändern");
                         for (int i = 0; i < touchedObjektPositions.size(); i++) {
                             boolean isChecked = touchedObjektPositions.valueAt(i);
                             if (isChecked) {
                                 int postitionInListView = touchedObjektPositions.keyAt(i);
-                                Objekte shoppingMemo = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
-                                Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + shoppingMemo.toString());
+                                Objekte ObjektDetail = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
+                                Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + ObjektDetail.toString());
 
-                                AlertDialog editShoppingMemoDialog = EditObjektDialog(shoppingMemo);
-                                editShoppingMemoDialog.show();
+                                AlertDialog editObjektDialog = EditObjektDialog(ObjektDetail);
+                                editObjektDialog.show();
+                            }
+                        }
+
+                        mode.finish();
+                        break;
+
+                    case R.id.cab_copy:
+                        Log.d(LOG_TAG, "Objekt ändern");
+                        for (int i = 0; i < touchedObjektPositions.size(); i++) {
+                            boolean isChecked = touchedObjektPositions.valueAt(i);
+                            if (isChecked) {
+                                int postitionInListView = touchedObjektPositions.keyAt(i);
+                                Objekte ObjektDetail = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
+                                Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + ObjektDetail.toString());
+
+                                AlertDialog copyObjektDialog = CopyObjektDialog(ObjektDetail);
+                                copyObjektDialog.show();
                             }
                         }
 
@@ -285,6 +302,70 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.getName() + " Seriennummer: " + Objekte.getSN() + " Anschaffungsdatum: " + Objekte.getAn_datum()+ " Kosten: " + Objekte.getKosten()+ " Anwender: " + Objekte.getAnwender());
                         Log.d(LOG_TAG, "Neuer Eintrag - ID: " + updatedObjekte.getId() + " Inhalt: " + updatedObjekte.getName() + " Seriennummer: " + updatedObjekte.getSN()+ " Anschaffungsdatum: " + updatedObjekte.getAn_datum()+ " Kosten: " + updatedObjekte.getKosten()+ " Anwender: " + updatedObjekte.getAnwender());
+
+                        showAllListEntries();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_button_negative, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        return builder.create();
+    }
+
+    private AlertDialog CopyObjektDialog(final Objekte Objekte) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+
+        View dialogsView = inflater.inflate(R.layout.dialog_edit_objekt, null);
+
+        final EditText editTextNewQuantity = (EditText) dialogsView.findViewById(R.id.editText_new_quantity);
+        editTextNewQuantity.setText(String.valueOf(Objekte.getNumber()));
+
+        final EditText editTextNewProduct = (EditText) dialogsView.findViewById(R.id.editText_new_product);
+        editTextNewProduct.setText(Objekte.getName());
+
+        final EditText editTextNewSN = (EditText) dialogsView.findViewById((R.id.editText_new_serial));
+        editTextNewSN.setText((Objekte.getSN()));
+
+        final EditText editTextNewAn_Datum = (EditText) dialogsView.findViewById((R.id.editText_new_an_datum));
+        editTextNewAn_Datum.setText((Objekte.getAn_datum()));
+
+        final EditText editTextNewKosten = (EditText) dialogsView.findViewById((R.id.editText_new_kosten));
+        editTextNewKosten.setText((Objekte.getKosten()));
+
+        final EditText editTextNewAnwender = (EditText) dialogsView.findViewById((R.id.editText_new_anwender));
+        editTextNewAnwender.setText((Objekte.getAnwender()));
+
+        builder.setView(dialogsView)
+                .setTitle(R.string.dialog_title)
+                .setPositiveButton(R.string.dialog_button_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String quantityString = editTextNewQuantity.getText().toString();
+                        String product = editTextNewProduct.getText().toString();
+
+                        if ((TextUtils.isEmpty(quantityString)) || (TextUtils.isEmpty(product))) {
+                            Log.d(LOG_TAG, "Ein Eintrag enthielt keinen Text. Daher Abbruch der Änderung.");
+                            return;
+                        }
+
+                        int quantity = Integer.parseInt(quantityString);
+
+                        String sn = editTextNewSN.getText().toString();
+                        String an_datum = editTextNewAn_Datum.getText().toString();
+                        String kosten = editTextNewKosten.getText().toString();
+                        String anwender = editTextNewAnwender.getText().toString();
+
+                        // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
+                        Objekte copiedObjekte = dataSource.createObjekt(product, quantity, sn, an_datum,kosten, anwender);
+
+                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.getName() + " Seriennummer: " + Objekte.getSN() + " Anschaffungsdatum: " + Objekte.getAn_datum()+ " Kosten: " + Objekte.getKosten()+ " Anwender: " + Objekte.getAnwender());
+                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + copiedObjekte.getId() + " Inhalt: " + copiedObjekte.getName() + " Seriennummer: " + copiedObjekte.getSN()+ " Anschaffungsdatum: " + copiedObjekte.getAn_datum()+ " Kosten: " + copiedObjekte.getKosten()+ " Anwender: " + copiedObjekte.getAnwender());
 
                         showAllListEntries();
                         dialog.dismiss();

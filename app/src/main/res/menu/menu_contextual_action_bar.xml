@@ -13,8 +13,13 @@
         android:title="@string/cab_change" />
 
     <item
+        android:id="@+id/cab_copy"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/cab_copy" />
+
+    <item
         android:id="@+id/cab_about"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/cab_change" />
+        android:title="@string/cab_search" />
 
 </menu>

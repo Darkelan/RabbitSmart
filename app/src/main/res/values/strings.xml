@@ -7,7 +7,9 @@
     <string name="button_add_product">+</string>
     <string name="editText_errorMessage">Das Feld darf nicht leer sein.</string>
     <string name="cab_delete">Objekte löschen</string>
-    <string name="cab_change">Eintrag ändern</string>
+    <string name="cab_change">Objekt ändern</string>
+    <string name="cab_search">Objekt suchen</string>
+    <string name="cab_copy">Objekt kopieren</string>
     <string name="cab_checked_string">ausgewählt</string>
     <string name="dialog_title">Listeneintrag ändern</string>
     <string name="dialog_title_number">Nummer:</string>
