@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setView(dialogsView)
                 .setTitle(R.string.dialog_title)
-                .setPositiveButton(R.string.dialog_button_positive, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_button_edit_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String quantityString = editTextNewQuantity.getText().toString();
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(R.string.dialog_button_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_button_edit_negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
 
-        View dialogsView = inflater.inflate(R.layout.dialog_edit_objekt, null);
+        View dialogsView = inflater.inflate(R.layout.dialog_copy_objekt, null);
 
         final EditText editTextNewQuantity = (EditText) dialogsView.findViewById(R.id.editText_new_quantity);
         editTextNewQuantity.setText(String.valueOf(Objekte.getNumber()));
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setView(dialogsView)
                 .setTitle(R.string.dialog_title)
-                .setPositiveButton(R.string.dialog_button_positive, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_button_copy_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String quantityString = editTextNewQuantity.getText().toString();
@@ -364,14 +364,14 @@ public class MainActivity extends AppCompatActivity {
                         // An dieser Stelle schreiben wir die geänderten Daten in die SQLite Datenbank
                         Objekte copiedObjekte = dataSource.createObjekt(product, quantity, sn, an_datum,kosten, anwender);
 
-                        Log.d(LOG_TAG, "Alter Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.getName() + " Seriennummer: " + Objekte.getSN() + " Anschaffungsdatum: " + Objekte.getAn_datum()+ " Kosten: " + Objekte.getKosten()+ " Anwender: " + Objekte.getAnwender());
-                        Log.d(LOG_TAG, "Neuer Eintrag - ID: " + copiedObjekte.getId() + " Inhalt: " + copiedObjekte.getName() + " Seriennummer: " + copiedObjekte.getSN()+ " Anschaffungsdatum: " + copiedObjekte.getAn_datum()+ " Kosten: " + copiedObjekte.getKosten()+ " Anwender: " + copiedObjekte.getAnwender());
+                        Log.d(LOG_TAG, "Original-Eintrag - ID: " + Objekte.getId() + " Inhalt: " + Objekte.getName() + " Seriennummer: " + Objekte.getSN() + " Anschaffungsdatum: " + Objekte.getAn_datum()+ " Kosten: " + Objekte.getKosten()+ " Anwender: " + Objekte.getAnwender());
+                        Log.d(LOG_TAG, "Kopierter Eintrag - ID: " + copiedObjekte.getId() + " Inhalt: " + copiedObjekte.getName() + " Seriennummer: " + copiedObjekte.getSN()+ " Anschaffungsdatum: " + copiedObjekte.getAn_datum()+ " Kosten: " + copiedObjekte.getKosten()+ " Anwender: " + copiedObjekte.getAnwender());
 
                         showAllListEntries();
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(R.string.dialog_button_negative, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_button_copy_negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
