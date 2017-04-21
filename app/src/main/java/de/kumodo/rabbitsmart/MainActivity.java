@@ -4,6 +4,7 @@ package de.kumodo.rabbitsmart;
  * Created by l.schmidt on 06.03.2017.
  */
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -196,10 +198,17 @@ public class MainActivity extends AppCompatActivity {
                                 Objekte objekt = (Objekte) ObjektInventurListView.getItemAtPosition(postitionInListView);
                                 Log.d(LOG_TAG, "Position im ListView: " + postitionInListView + " Inhalt: " + objekt.toString());
                                 dataSource.deleteObjekt(objekt);
+
+                                Context context = getApplicationContext();
+                                CharSequence text = objekt.getName()+ " gelöscht.";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
                             }
                         }
                         showAllListEntries();
                         mode.finish();
+
                         break;
 
                     case R.id.cab_change:
@@ -305,6 +314,13 @@ public class MainActivity extends AppCompatActivity {
 
                         showAllListEntries();
                         dialog.dismiss();
+
+                        Context context = getApplicationContext();
+                        CharSequence text = updatedObjekte.getName() + " aktualisiert.";
+                        int duration = Toast.LENGTH_LONG;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                     }
                 })
                 .setNegativeButton(R.string.dialog_button_edit_negative, new DialogInterface.OnClickListener() {
@@ -369,6 +385,13 @@ public class MainActivity extends AppCompatActivity {
 
                         showAllListEntries();
                         dialog.dismiss();
+
+                        Context context = getApplicationContext();
+                        CharSequence text = Objekte.getName()+ " wurde als neues Objekt " + copiedObjekte.getName() + " kopiert.";
+                        int duration = Toast.LENGTH_LONG;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                     }
                 })
                 .setNegativeButton(R.string.dialog_button_copy_negative, new DialogInterface.OnClickListener() {
