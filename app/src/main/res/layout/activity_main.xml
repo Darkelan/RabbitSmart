@@ -29,7 +29,7 @@
             android:id="@+id/editText_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:hint="@string/editText_hint_name" />
 
         <Button
@@ -37,6 +37,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_add_product" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30px"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ListView
