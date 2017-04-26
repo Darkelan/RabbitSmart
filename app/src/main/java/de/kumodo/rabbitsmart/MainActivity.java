@@ -481,6 +481,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_about) {
+            Toast.makeText(getApplicationContext(), "Über gedrückt!", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, AboutActivity.class));
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
