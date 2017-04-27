@@ -27,6 +27,10 @@
     <string name="preference_objektliste_title">Liste der Objekte</string>
     <string name="preference_objektliste_key">objektliste</string>
     <string name="preference_objektliste_default">Objekt1,Objekt2,Objekt3,Objekt4</string>
-    <string name="action_about">Über</string>
+    <string name="action_about">Mehr...</string>
     <string name="title_activity_about">Über RabbitSmart</string>
+    <string name="info_text">RabbitSmart</string>
+    <string name="button_about">Entwicklung</string>
+    <string name="button_kontakt">Kontakt</string>
+    <string name="button_impressum">Impressum</string>
 </resources>
