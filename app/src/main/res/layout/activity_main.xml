@@ -39,8 +39,10 @@
             android:id="@+id/button_add_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_input_add"
-            android:text="@string/button_add_product" />
+            android:background="@drawable/roundcorner"
+            android:padding="1dp"
+            android:text="@string/button_add_product"
+            app:srcCompat="@android:drawable/ic_menu_add" />
 
     </LinearLayout>
 
