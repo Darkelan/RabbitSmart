@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -18,24 +19,27 @@
         android:focusableInTouchMode="true">
 
         <EditText
+            android:id="@+id/editText_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
             android:hint="@string/editText_hint_number"
-            android:inputType="number"
-            android:id="@+id/editText_number"
-            android:layout_weight="1" />
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/editText_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="5"
             android:hint="@string/editText_hint_name" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_add_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_input_add"
             android:text="@string/button_add_product" />
 
     </LinearLayout>

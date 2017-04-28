@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     Diese sind der Add-Button und die beiden EditText-Felder.*/
 
    private void activateAddButton() {
-        Button buttonAddProduct = (Button) findViewById(R.id.button_add_objekt);
+        ImageButton buttonAddProduct = (ImageButton) findViewById(R.id.button_add_objekt);
         final EditText editTextNumber = (EditText) findViewById(R.id.editText_number);
         final EditText editTextObjekt = (EditText) findViewById(R.id.editText_objekt);
 
