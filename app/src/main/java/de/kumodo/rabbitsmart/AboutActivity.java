@@ -1,11 +1,11 @@
 package de.kumodo.rabbitsmart;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * Created by l.schmidt on 26.04.2017.
@@ -27,11 +27,36 @@ public class AboutActivity extends AppCompatActivity {
         buttonKontakt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Kontakt gedrückt";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+
+                AlertDialog.Builder alertKontakt = new AlertDialog.Builder(AboutActivity.this);
+
+                // set title
+                alertKontakt.setTitle("Kontaktinformationen");
+
+                // set dialog message
+                alertKontakt
+                        .setMessage("Click yes to exit!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                AboutActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertKontakt.create();
+
+                // show it
+                alertDialog.show();
             }
         });
     }
@@ -41,11 +66,35 @@ public class AboutActivity extends AppCompatActivity {
         buttonEntwicklung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Entwicklung gedrückt";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                AlertDialog.Builder alertEntwicklung = new AlertDialog.Builder(AboutActivity.this);
+
+                // set title
+                alertEntwicklung.setTitle("Entwicklerinformationen");
+
+                // set dialog message
+                alertEntwicklung
+                        .setMessage("Click yes to exit!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                AboutActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertEntwicklung.create();
+
+                // show it
+                alertDialog.show();
             }
         });
     }
@@ -55,11 +104,35 @@ public class AboutActivity extends AppCompatActivity {
         buttonImpressum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Impressum gedrückt";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                AlertDialog.Builder alertImpressum = new AlertDialog.Builder(AboutActivity.this);
+
+                // set title
+                alertImpressum.setTitle("Impressum und AGB");
+
+                // set dialog message
+                alertImpressum
+                        .setMessage("Click yes to exit!")
+                        .setCancelable(false)
+                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                AboutActivity.this.finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertImpressum.create();
+
+                // show it
+                alertDialog.show();
             }
         });
     }
