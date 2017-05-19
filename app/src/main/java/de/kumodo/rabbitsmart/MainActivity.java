@@ -25,7 +25,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity{
 
     private ObjektDataSource dataSource;
     private ListView mObjektInventurListView;
-    private ImageButton scanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +53,8 @@ public class MainActivity extends AppCompatActivity{
         dataSource = new ObjektDataSource(this);
 
         initializeObjektInventurListView();
-        activateAddButton();
+        activateButtons();
         initializeContextualActionBar();
-        scanBtn = (ImageButton)findViewById(R.id.button_scan);
-
-        scanBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-
-            public void onClick(View v){
-                if(v.getId()==R.id.button_scan){
-                    IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
-                    scanIntegrator.initiateScan();
-                }
-            }
-        });
     }
 
     private void showAllListEntries() {
@@ -84,11 +70,22 @@ public class MainActivity extends AppCompatActivity{
     /*Mit den folgenden Anweisungen fragen wir die Referenzen zu den Widget-Objekten an.
     Diese sind der Add-Button und die beiden EditText-Felder.*/
 
-   private void activateAddButton() {
+    private void activateButtons() {
         ImageButton buttonAddProduct = (ImageButton) findViewById(R.id.button_add_objekt);
-
+        ImageButton buttonScanProduct = (ImageButton)findViewById(R.id.button_scan_objekt);
         final EditText editTextNumber = (EditText) findViewById(R.id.editText_number);
         final EditText editTextObjekt = (EditText) findViewById(R.id.editText_objekt);
+
+        buttonScanProduct.setOnClickListener(new View.OnClickListener(){
+           @Override
+
+           public void onClick(View v){
+               if(v.getId()==R.id.button_scan_objekt){
+                   IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+                   scanIntegrator.initiateScan();
+               }
+           }
+        });
 
         /*Den OnClickListener registrieren wir mit den Zeilen 87 bis 120 für das Button-Objekt.
         Dazu verwenden wir die Methode setOnClickListener(), die wir auf dem Button-Objekt aufrufen
@@ -525,5 +522,30 @@ public class MainActivity extends AppCompatActivity{
 
         Log.d(LOG_TAG, "Die Datenquelle wird geschlossen.");
         dataSource.close();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        if (scanningResult != null) {
+
+            EditText editTextNumber = (EditText) findViewById(R.id.editText_number);
+            EditText editTextObjekt = (EditText) findViewById(R.id.editText_objekt);
+
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+
+            editTextNumber.setText(scanContent);
+            editTextObjekt.setText((scanFormat));
+
+        }
+
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
     }
 }

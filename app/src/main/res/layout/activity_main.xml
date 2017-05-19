@@ -45,7 +45,7 @@
             app:srcCompat="@android:drawable/ic_menu_add" />
 
         <ImageButton
-            android:id="@+id/button_scan"
+            android:id="@+id/button_scan_objekt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/roundcorner"
