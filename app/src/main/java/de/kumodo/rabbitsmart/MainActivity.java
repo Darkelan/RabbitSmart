@@ -38,7 +38,7 @@ import java.util.List;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -58,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
         activateAddButton();
         initializeContextualActionBar();
         scanBtn = (ImageButton)findViewById(R.id.button_scan);
+
+        scanBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+
+            public void onClick(View v){
+                if(v.getId()==R.id.button_scan){
+                    IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+                    scanIntegrator.initiateScan();
+                }
+            }
+        });
     }
 
     private void showAllListEntries() {
@@ -75,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
    private void activateAddButton() {
         ImageButton buttonAddProduct = (ImageButton) findViewById(R.id.button_add_objekt);
+
         final EditText editTextNumber = (EditText) findViewById(R.id.editText_number);
         final EditText editTextObjekt = (EditText) findViewById(R.id.editText_objekt);
 
