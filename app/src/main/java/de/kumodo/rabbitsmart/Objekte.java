@@ -1,7 +1,5 @@
 package de.kumodo.rabbitsmart;
 
-import android.widget.Toast;
-
 /**
  * Created by l.schmidt on 07.03.2017.
  */
