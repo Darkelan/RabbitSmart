@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ObjektDataSource dataSource;
     private ListView mObjektInventurListView;
+    private ImageButton scanBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         initializeObjektInventurListView();
         activateAddButton();
         initializeContextualActionBar();
+        scanBtn = (ImageButton)findViewById(R.id.button_scan);
     }
 
     private void showAllListEntries() {
