@@ -81,10 +81,10 @@ public class ObjektDataSource {
 
     Das so erzeugte Objekt-Objekt geben wir an die aufrufende Methode zurück. Doch vorher schließen wir noch das Cursor-Objekt (Zeile 101).*/
 
-    public Objekte createObjekt(String product, int quantity, String sn, String an_datum, String kosten, String anwender) {
+    public Objekte createObjekt(String product, String inv_nr, String sn, String an_datum, String kosten, String anwender) {
         ContentValues values = new ContentValues();
         values.put(ObjektDbHelper.COLUMN_NAME, product);
-        values.put(ObjektDbHelper.COLUMN_NUMBER, quantity);
+        values.put(ObjektDbHelper.COLUMN_NUMBER, inv_nr);
         values.put(ObjektDbHelper.COLUMN_SN, sn);
         values.put(ObjektDbHelper.COLUMN_AN_DATUM, an_datum);
         values.put(ObjektDbHelper.COLUMN_KOSTEN, kosten);
@@ -122,12 +122,12 @@ public class ObjektDataSource {
         Log.d(LOG_TAG, "Eintrag gelöscht! ID: " + id + " Inhalt: " + objekte.toString());
     }
 
-    public Objekte updateObjekt(long id, String newProduct, int newQuantity, boolean newChecked, String newsn, String newan_datum, String newkosten, String newanwender) {
+    public Objekte updateObjekt(long id, String newProduct, String newInv_nr, boolean newChecked, String newsn, String newan_datum, String newkosten, String newanwender) {
         int intValueChecked = (newChecked) ? 1 : 0;
 
         ContentValues values = new ContentValues();
         values.put(ObjektDbHelper.COLUMN_NAME, newProduct);
-        values.put(ObjektDbHelper.COLUMN_NUMBER, newQuantity);
+        values.put(ObjektDbHelper.COLUMN_NUMBER, newInv_nr);
         values.put(ObjektDbHelper.COLUMN_CHECKED, intValueChecked);
         values.put(ObjektDbHelper.COLUMN_SN, newsn);
         values.put(ObjektDbHelper.COLUMN_AN_DATUM, newan_datum);
@@ -168,7 +168,7 @@ public class ObjektDataSource {
     private Objekte cursorToObjekt(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(ObjektDbHelper.COLUMN_ID);
         int idProduct = cursor.getColumnIndex(ObjektDbHelper.COLUMN_NAME);
-        int idQuantity = cursor.getColumnIndex(ObjektDbHelper.COLUMN_NUMBER);
+        int idInvNr = cursor.getColumnIndex(ObjektDbHelper.COLUMN_NUMBER);
         int idChecked = cursor.getColumnIndex(ObjektDbHelper.COLUMN_CHECKED);
         int idSN = cursor.getColumnIndex(ObjektDbHelper.COLUMN_SN);
         int idAn_datum = cursor.getColumnIndex(ObjektDbHelper.COLUMN_AN_DATUM);
@@ -176,7 +176,7 @@ public class ObjektDataSource {
         int idAnwender = cursor.getColumnIndex(ObjektDbHelper.COLUMN_ANWENDER);
 
         String product = cursor.getString(idProduct);
-        int quantity = cursor.getInt(idQuantity);
+        String inv_nr = cursor.getString(idInvNr);
         long id = cursor.getLong(idIndex);
         int intValueChecked = cursor.getInt(idChecked);
         String sn = cursor.getString(idSN);
@@ -185,7 +185,7 @@ public class ObjektDataSource {
         String anwender = cursor.getString(idAnwender);
         boolean isChecked = (intValueChecked != 0);
 
-        Objekte objekte = new Objekte(product, quantity, id, isChecked, sn, an_datum, kosten, anwender);
+        Objekte objekte = new Objekte(product, inv_nr, id, isChecked, sn, an_datum, kosten, anwender);
 
         return objekte;
     }

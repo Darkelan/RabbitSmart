@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity{
                 da die Werte der Textfelder nur als String-Objekte vorliegen. Mit den beiden Anweisungen in den
                 Zeilen 119 und 120 setzen wir den Wert der Textfelder zurück und löschen damit die eingetragenen Werte.*/
 
-                int id_objekt = Integer.parseInt(numberString);
+                String id_objekt = (numberString);
                 editTextNumber.setText("");
                 editTextObjekt.setText("");
                 String sn = "Seriennummer";
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity{
         View dialogsView = inflater.inflate(R.layout.dialog_edit_objekt, null);
 
         final EditText editTextNewQuantity = (EditText) dialogsView.findViewById(R.id.editText_new_quantity);
-        editTextNewQuantity.setText(String.valueOf(Objekte.getNumber()));
+        editTextNewQuantity.setText(String.valueOf(Objekte.getInvNr()));
 
         final EditText editTextNewProduct = (EditText) dialogsView.findViewById(R.id.editText_new_product);
         editTextNewProduct.setText(Objekte.getName());
@@ -314,7 +314,7 @@ public class MainActivity extends AppCompatActivity{
                             return;
                         }
 
-                        int quantity = Integer.parseInt(quantityString);
+                        String quantity = quantityString;
 
                         String sn = editTextNewSN.getText().toString();
                         String an_datum = editTextNewAn_Datum.getText().toString();
@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity{
         View dialogsView = inflater.inflate(R.layout.dialog_copy_objekt, null);
 
         final EditText editTextNewQuantity = (EditText) dialogsView.findViewById(R.id.editText_new_quantity);
-        editTextNewQuantity.setText(String.valueOf(Objekte.getNumber()));
+        editTextNewQuantity.setText(String.valueOf(Objekte.getInvNr()));
 
         final EditText editTextNewProduct = (EditText) dialogsView.findViewById(R.id.editText_new_product);
         editTextNewProduct.setText(Objekte.getName());
@@ -385,7 +385,7 @@ public class MainActivity extends AppCompatActivity{
                             return;
                         }
 
-                        int quantity = Integer.parseInt(quantityString);
+                        String quantity = (quantityString);
 
                         String sn = editTextNewSN.getText().toString();
                         String an_datum = editTextNewAn_Datum.getText().toString();
@@ -440,7 +440,7 @@ public class MainActivity extends AppCompatActivity{
 
                 //Hier prüfen, ob Eintrag abgehakt ist. Falls ja, Text durchstreichen
                 if (objekt.isChecked()) {
-                    // Toast.makeText(getApplicationContext(), "Objekt " + objekt.getNumber() +" deaktiviert", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), "Objekt " + objekt.getInvNr() +" deaktiviert", Toast.LENGTH_SHORT).show();
                     textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     textView.setTextColor(Color.rgb(255,0,0));
                 }
@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity{
 
                 // Hier den checked-Wert des Memo-Objekts umkehren, bspw. von true auf false
                 // Dann ListView neu zeichnen mit showAllListEntries()
-                Objekte updatedObjektMemo = dataSource.updateObjekt(objekte.getId(), objekte.getName(), objekte.getNumber(), (!objekte.isChecked()), objekte.getSN(), objekte. getAn_datum(), objekte.getKosten(), objekte.getAnwender());
+                Objekte updatedObjektMemo = dataSource.updateObjekt(objekte.getId(), objekte.getName(), objekte.getInvNr(), (!objekte.isChecked()), objekte.getSN(), objekte. getAn_datum(), objekte.getKosten(), objekte.getAnwender());
                 Log.d(LOG_TAG, "Checked-Status von Eintrag: " + updatedObjektMemo.getName().toString() + " ist: " + updatedObjektMemo.isChecked());
 
                 /* Intent erzeugen und Starten der ObjektDetailActivity mit explizitem Intent
@@ -469,7 +469,7 @@ public class MainActivity extends AppCompatActivity{
                 objektdetailIntent.putExtra(Intent.EXTRA_TEXT, updatedObjektMemo.toString());
                 startActivity(objektdetailIntent);
                 */
-                // Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getNumber() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), objekte.getId() + " -> " +  objekte.getInvNr() + " -> " + objekte.getName() + " -> gedrückt", Toast.LENGTH_SHORT).show();
                 showAllListEntries();
             }
         });

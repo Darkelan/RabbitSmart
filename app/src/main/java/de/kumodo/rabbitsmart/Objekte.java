@@ -6,14 +6,14 @@ package de.kumodo.rabbitsmart;
 
 public class Objekte {
 
-    private String name, an_datum, kosten, sn, anwender;
-    private int number;
+    private String name, an_datum, kosten, sn, anwender, inv_nr;
+    //private int inv_nr;
     private long id;
     private boolean checked;
 
-    public Objekte(String name, int number, long id, boolean checked, String sn, String an_datum, String kosten, String anwender ) {
+    public Objekte(String name, String inv_nr, long id, boolean checked, String sn, String an_datum, String kosten, String anwender ) {
         this.name = name;
-        this.number = number;
+        this.inv_nr = inv_nr;
         this.an_datum = an_datum;
         this.kosten = kosten;
         this.sn = sn;
@@ -43,8 +43,8 @@ public class Objekte {
         this.name = name;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setInv_nr(String inv_nr) {
+        this.inv_nr = inv_nr;
     }
 
     public void setId(long id) {
@@ -76,8 +76,8 @@ public class Objekte {
         return anwender;
     }
 
-    public int getNumber() {
-        return number;
+    public String getInvNr() {
+        return inv_nr;
     }
 
     public long getId() {
@@ -91,7 +91,7 @@ public class Objekte {
     //Methode toString überschreiben
     @Override
     public String toString() {
-       String output = number + " -> " + name + " -> " + sn;
+       String output = inv_nr + " -> " + name + " -> " + sn;
 
        return output;
     }

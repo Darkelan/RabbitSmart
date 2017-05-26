@@ -16,7 +16,7 @@ public class ObjektDbHelper extends SQLiteOpenHelper {
 
     //DB-Eigenschaften
     public static final String DB_NAME = "objekt_list.db";
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 8;
 
     //Tabelleneigenschaften
     public static final String TABLE_OBJEKT_LIST = "objekt_list";
@@ -29,7 +29,7 @@ public class ObjektDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_KOSTEN = "kosten";
     public static final String COLUMN_AN_DATUM = "an_datum";
     public static final String COLUMN_ANWENDER = "anwender";
-    public static final String COLUMN_NUMBER = "quantity";
+    public static final String COLUMN_NUMBER = "inv_nr";
     public static final String COLUMN_CHECKED = "checked";
 
     //Definition des SQL-Strings, mit dem die Tabelle in der SQLite Datenbank erstellt wird
@@ -37,7 +37,7 @@ public class ObjektDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_OBJEKT_LIST +
                     "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAME + " TEXT NOT NULL, " +
-                    COLUMN_NUMBER + " INTEGER NOT NULL, " +
+                    COLUMN_NUMBER + " TEXT NOT NULL, " +
                     COLUMN_SN + " TEXT, " +
                     COLUMN_KOSTEN + " TEXT, " +
                     COLUMN_AN_DATUM + " TEXT, " +
