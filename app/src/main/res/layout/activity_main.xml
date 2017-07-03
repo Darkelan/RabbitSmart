@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    android:paddingBottom="20dp"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/editText_number"
@@ -38,20 +38,22 @@
         <ImageButton
             android:id="@+id/button_add_objekt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.30"
             android:background="@drawable/roundcorner"
             android:padding="1dp"
             android:text="@string/button_add_product"
-            app:srcCompat="@android:drawable/ic_menu_add" />
+            app:srcCompat="@mipmap/ic_plus_box_black_24dp" />
 
         <ImageButton
             android:id="@+id/button_scan_objekt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.33"
             android:background="@drawable/roundcorner"
             android:padding="1dp"
             android:text="@string/scan_button"
-            app:srcCompat="@android:drawable/ic_media_ff" />
+            app:srcCompat="@mipmap/ic_barcode_scan_black_18dp" />
 
     </LinearLayout>
 
